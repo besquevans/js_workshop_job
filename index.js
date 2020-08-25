@@ -1,17 +1,32 @@
 window.addEventListener("DOMContentLoaded", () => {
   const jobList = document.querySelector("#job-pannel")
   const pagination = document.querySelector(".pagination-next")
+  const searchForm = document.forms["search-job"]
   var pageNumber = 1
 
+  renderPage()
   ///toggle navbar-menu
   document.querySelector("#navbar-burger").addEventListener("click", () => {
     document.querySelector("#navbar-menu").classList.toggle('is-active');
   })
 
   ///search job
-  const searchForm = document.forms["search-job"]
+  
   searchForm.addEventListener("submit", (e) => {
     e.preventDefault()
+    renderPage()
+  })
+
+  pagination.addEventListener("click", (e) => {
+    e.preventDefault()
+    console.log("next page")
+    const url = pagination.getAttribute("href")
+    console.log(url)
+    getJobs(url)
+  })
+
+  ///default page
+  function renderPage() {
     jobList.innerHTML = ''
 
     const description = searchForm.description.value
@@ -25,16 +40,7 @@ window.addEventListener("DOMContentLoaded", () => {
     const requestUrl = `${url}?description=${description}&location=${location}&full_time=${full_time}`
     console.log(requestUrl)
     getJobs(requestUrl)
-  })
-
-  pagination.addEventListener("click", (e) => {
-    e.preventDefault()
-    console.log("next page")
-    const url = pagination.getAttribute("href")
-    console.log(url)
-    getJobs(url)
-  })
-
+  }
 
   ///getJobs
   async function getJobs(requestUrl){
