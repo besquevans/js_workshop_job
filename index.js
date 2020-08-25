@@ -37,14 +37,16 @@ window.addEventListener("DOMContentLoaded", () => {
 
 
   ///getJobs
-  function getJobs(requestUrl){
-    
+  async function getJobs(requestUrl){
+    const nextJobs = await checkNextpage(pageNumber, requestUrl)
+
     fetch(requestUrl)
     .then(response => response.json())
     .then((jobs) => {
       console.log(jobs)
       pageNumber += 1
-      if (jobs.length == 50) {
+
+      if (nextJobs.length > 0) {
         pagination.removeAttribute("disabled")
         requestUrl = requestUrl.split("&page=")[0]
         pagination.href = `${requestUrl}&page=${pageNumber}`
@@ -69,16 +71,11 @@ window.addEventListener("DOMContentLoaded", () => {
     jobList.appendChild(clone)
   }
 
-  function checkNextpage(pageNumber, requestUrl){
+  async function checkNextpage(pageNumber, requestUrl){
     requestUrl = requestUrl.split("&page=")[0]
-    fetch(`${requestUrl}&page=${pageNumber + 1}`)
-    .then((response) => response.json())
-    .then((jobs) => {
-      if( jobs.length > 0){
-        return true
-      } else {
-        return false
-      }
-    })
+    let response = await fetch(`${requestUrl}&page=${pageNumber + 1}`)
+    let jobs = await response.json()
+    // console.log(jobs)
+    return jobs
   }
 })
