@@ -36,6 +36,8 @@ window.addEventListener("DOMContentLoaded", () => {
       full_time = "on"
     }
     
+    pageNumber = 1
+
     const url = 'https://still-spire-37210.herokuapp.com/positions.json'
     const requestUrl = `${url}?description=${description}&location=${location}&full_time=${full_time}`
     console.log(requestUrl)
