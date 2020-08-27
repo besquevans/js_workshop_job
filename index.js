@@ -50,9 +50,11 @@ window.addEventListener("DOMContentLoaded", () => {
     .then(response => response.json())
     .then((jobs) => {
       console.log(jobs)
-      pageNumber += 1
-
+      console.log(pageNumber)
+      
       if (nextJobs.length > 0) {
+        //將頁數+1 放入連結
+        pageNumber += 1
         pagination.removeAttribute("disabled")
         requestUrl = requestUrl.split("&page=")[0]
         pagination.href = `${requestUrl}&page=${pageNumber}`
