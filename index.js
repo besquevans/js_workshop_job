@@ -35,10 +35,10 @@ window.addEventListener("DOMContentLoaded", () => {
     if(searchForm.full_time.checked){
       full_time = "on"
     }
-    
+
     pageNumber = 1
 
-    const url = 'https://still-spire-37210.herokuapp.com/positions.json'
+    const url = 'https://github-job-js-workshop-server.herokuapp.com/positions.json'
     const requestUrl = `${url}?description=${description}&location=${location}&full_time=${full_time}`
     console.log(requestUrl)
     getJobs(requestUrl)
